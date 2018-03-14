@@ -1,7 +1,7 @@
 
 def generateID():
    return 1 # TODO: Make this do something actually important
-class User():
+class User:
     def __init__(self, name):
         self.__name = name
         self.__id = generateID()
@@ -17,15 +17,15 @@ class User():
         Similarily, we'll probably end up using a UserFactory looking at this now in order to generate users.
         Not sure if I'm jumping the gun though on that one.
         '''
-def getName(self):
-    return self.name
-
-def setName(self, name):
-    #TODO: Any restritions that we should care about here?
-    self.name = name
-
-def getID(self):
-    return self.id
+    def getName(self):
+        return self.__name
+    
+    def setName(self, name):
+        #TODO: Any restritions that we should care about here?
+        self.__name = name
+    
+    def getID(self):
+        return self.__id
 
 
 
