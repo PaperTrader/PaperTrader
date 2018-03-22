@@ -1,5 +1,6 @@
+import User
 
-class Administrator:
+class Administrator(User):
 
 	def __init__(self, adminId):
 		self.__adminId = adminId

@@ -1,5 +1,6 @@
+import User
 
-class Trader:
+class Trader(User):
 
 	def __init__(self, portfolio):
 		self.__portfolio = portfolio
