@@ -1,4 +1,5 @@
 class Stock:
+    
     def __init__(self, name, symbol, price):
         self.__name = name     # String
         self.__symbol = symbol # String
