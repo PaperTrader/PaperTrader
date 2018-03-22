@@ -1,11 +1,10 @@
-
-def generateID():
-   return 1 # TODO: Make this do something actually important
-class User:
+def generateid():
+   return 1 # todo: make this do something actually important
+users = [] # List of user objects
+ class User:
     def __init__(self, name):
         self.__name = name
         self.__id = generateID()
-        self.__users = []
         
         '''
         The class diagram specifies a protected list of users.

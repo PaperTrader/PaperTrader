@@ -12,7 +12,13 @@ class Administrator(User):
 		pass
 
 	def getUserByName(self, name):
-		pass
+            nullUser = User(None, None)
+                for user in users:
+                    if(user.getName() == name): return user
+                return nullUser
 
-	def getUserById(self, id):
-		pass
+	def getUserById(self, id_num):
+		nullUser = User(None, None)
+                for user in users:
+                    if(user.getID() == id_num): return user
+                return nullUser
