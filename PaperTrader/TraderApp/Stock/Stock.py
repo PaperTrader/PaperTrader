@@ -1,3 +1,5 @@
+
+
 class Stock:
     
     def __init__(self, name, symbol, price):
@@ -17,15 +19,14 @@ class Stock:
     '''
 
 
-    def getName():
-        return this.__name
+    def getName(self):
+        return self.__name
 
-    def getSymbol():
-        return this.__symbol
+    def getSymbol(self):
+        return self.__symbol
 
-    def getPrice():
-        return this.__price
+    def getPrice(self):
+        return self.__price
 
     def update(): # To be used with the observer pattern, or visitor
         pass
-
