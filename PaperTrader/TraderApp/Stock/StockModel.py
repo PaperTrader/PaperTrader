@@ -8,7 +8,3 @@ class StockModel(models.Model):
 	name = models.CharField(max_length = MAX_LENGTH_NAME)
 	symbol = models.CharField(max_length = MAX_LENGTH_SYMBOL)
 
-s = StockModel(name = "Me", symbol = "PEEN")
-s.save()
-
-print(s.name)

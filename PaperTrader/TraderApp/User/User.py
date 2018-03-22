@@ -1,7 +1,7 @@
 def generateid():
    return 1 # todo: make this do something actually important
 users = [] # List of user objects
- class User:
+class User:
     def __init__(self, name):
         self.__name = name
         self.__id = generateID()
