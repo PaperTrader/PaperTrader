@@ -1,0 +1,22 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div class="container">
+<h1> Add Stock <a class="btn btn-outline-info" href="{% url "stock-list" %}">Return to Stock List</a> </h1> </h1>
+<form action="{% url "stock-new" %}" method="POST">
+	{% csrf_token %}
+	<div class="row">
+	    <div class="col">
+	    	<label>Stock Name</label>
+		{{form.name}}<br>
+		<small>This is the name of the company</small>
+	    </div>
+	    <div class="col">
+	    	<label>Ticker</label>
+		{{form.symbol}}<br>
+		<small>This is the ticker used on the stock exchange, i.e GOOG</small>
+	    </div>
+	  </div>
+	  <br>
+	<button type="submit" class="btn btn-primary", id="save">Submit</button>
+</form>
+</div>

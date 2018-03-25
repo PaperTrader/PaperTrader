@@ -1,0 +1,32 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<div class="container">
+<h1> Stocks </h1>
+<a class="btn btn-outline-dark" href="{% url "stock-new" %}">Add Stock</a>
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Stock Name</th>
+			<th scope="col">Ticker</th>
+			<th scope="col">Open/Close</th>
+			<th scope="col">High/Low</th>
+			<th scope="col">Volume</th>
+			<th scope="col">Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for stock in object_list %}
+		<tr>
+			<th>{{ stock.id }}</th>
+			<th>{{ stock.name }}</th>
+			<th>{{ stock.symbol }}</th>
+			<th>{{ stock.opening }}<strong> / </strong>{{ stock.closing }}</th>
+			<th>{{ stock.high }}<strong> / </strong>{{ stock.low }}</th>
+			<th>{{ stock.volume }}</th>
+			<th> <a type="button" class="btn btn-outline-info"  href="{% url "stock-delete" pk=stock.id %}">Remove</a></th>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
