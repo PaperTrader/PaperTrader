@@ -19,6 +19,7 @@ import PaperTraderApp.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', PaperTraderApp.views.ListStockView.as_view(), name="Home"),
     path('stock-list/', PaperTraderApp.views.ListStockView.as_view(), name="stock-list"),
     path('create-stock/', PaperTraderApp.views.CreateStockView.as_view(), name="stock-new"),
     path('delete-stock/<int:pk>', PaperTraderApp.views.DeleteStockView.as_view(), name="stock-delete"),

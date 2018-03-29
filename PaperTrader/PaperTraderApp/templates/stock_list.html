@@ -2,16 +2,46 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="container">
-<h1> Stocks </h1>
-<a class="btn btn-outline-dark" href="{% url "stock-new" %}">Add Stock</a>
+<header>
+<center>
+<h1> PaperTrader </h1>
+<div class="alert alert-secondary">
+		Current Time:
+ 		<script language="javascript">
+ 		var today = new Date();
+ 		document.write(today);
+		</script>
+</div>
+</center>
+<div class="align">
+	<center>
+	<ul class="nav nav-pills nav-fill">
+	<li class="nav-item">
+	  <a class="nav-link active" href="/">Stock List</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url "stock-new" %}">Add Stock</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link disabled" href="#">???????</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link disabled" href="#">???????</a>
+	</li>
+	</ul>
+	</center>
+</header>
+</div>
+
+<br><br>
 <table class="table">
 	<thead class="thead-dark">
 		<tr>
 			<th scope="col">ID</th>
 			<th scope="col">Stock Name</th>
 			<th scope="col">Ticker</th>
-			<th scope="col">Open/Close</th>
-			<th scope="col">High/Low</th>
+			<th scope="col">Open / Close</th>
+			<th scope="col">High / Low</th>
 			<th scope="col">Volume</th>
 			<th scope="col">Delete</th>
 		</tr>
