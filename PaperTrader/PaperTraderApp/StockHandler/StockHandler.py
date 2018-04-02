@@ -24,7 +24,7 @@ class StockScraper(metaclass=Singleton):
         data = json.loads(response.read())
         daily_data = data['Time Series (Daily)']
         data = None
-        data = daily_data[str(self.getMostRecentBusinessDay()).split()[0]]
+        data = daily_data[self.getMostRecentBusinessDay()]
         return data
 
     def getOpen(self, symbol):
@@ -48,8 +48,11 @@ class StockScraper(metaclass=Singleton):
         return result['5. volume']
 
     def getMostRecentBusinessDay(self):
-        lastBusDay = datetime.datetime.today()
-        shift = datetime.timedelta(max(1,(lastBusDay.weekday() + 6) % 7 - 3))
-        lastBusDay = lastBusDay - shift
-        return lastBusDay
+        today = datetime.datetime.today()
+        weekdays = [0, 1, 2, 3, 4]
+        if(today.weekday() in weekdays):
+            return str(today).split()[0]
+        shift = datetime.timedelta(max(1,(today.weekday() + 6) % 7 - 3))
+        today = today - shift
+        return str(today).split()[0]
 
