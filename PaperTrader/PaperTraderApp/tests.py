@@ -1,6 +1,22 @@
 from django.test import TestCase
 from PaperTraderApp.models import StockModel
 from PaperTraderApp.StockHandler.StockHandler import StockScraper
+from PaperTraderApp.Users.Trader import Trader
+
+class UserTests(TestCase):
+    def test_user(self):
+        test = Trader("Bob")
+        self.assertEquals(test.getName(), 'Bob')
+
+    def test_setName(self):
+        test = Trader("Test")
+        test._setname("Test1")
+        self.assertEquals(test.getName(), 'Test1')
+
+    def test_getID(self):
+        test = Trader("Test")
+        test._setID(10)
+        self.assertEquals(test.getID(), 10)
 
 class StockTests(TestCase):
     def test_retrive(self):
