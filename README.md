@@ -6,7 +6,8 @@
 * Preston Kelley
 * Dante Pasionek
 * Walker Schmidt
-
+# Important Group Note
+Run `python manage.py test` to ensure the current version is working. Additionally, please add your own unit tests to the tests.py file to ensure the project is working properly before pushing to master!
 # Purpose
 Semester project for CSCI-4448 (Object Oriented Analysis & Design) at CU Boulder.
 

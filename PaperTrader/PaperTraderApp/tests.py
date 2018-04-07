@@ -2,6 +2,52 @@ from django.test import TestCase
 from PaperTraderApp.models import StockModel
 from PaperTraderApp.StockHandler.StockHandler import StockScraper
 from PaperTraderApp.Users.Trader import Trader
+from PaperTraderApp.Balance.Balance import Balance, BalanceException
+
+class BalanceTests(TestCase):
+    def test_balance(self):
+        b = Balance()
+        self.assertEquals(b.getBalance(), 0.0)
+
+    def test_balance_add(self):
+        b = Balance()
+        b.add(10.0)
+        self.assertEquals(b.getBalance(), 10.0)
+
+    def test_balance_sub(self):
+        b = Balance()
+        b.add(10.0)
+        b.sub(5.0)
+        self.assertEquals(b.getBalance(), 5.0)
+
+    def test_balance_set(self):
+        b = Balance()
+        b.add(10.0)
+        b.set(9.0)
+        self.assertEquals(b.getBalance(), 9.0)
+
+    def test_balance_add_exception(self):
+        b = Balance()
+        try:
+            b.add(-1.0)
+        except BalanceException as e:
+            self.assertEquals("Value invalid for function", e.message)
+
+    def test_balance_sub_exception1(self):
+        b = Balance()
+        try:
+            b.sub(-1.0)
+        except BalanceException as e:
+            self.assertEquals("Value invalid for function", e.message)
+
+    def test_balance_sub_exception2(self):
+        b = Balance()
+        b.set(100)
+        try:
+            b.sub(101)
+        except BalanceException as e:
+            self.assertEquals("Value invalid for function", e.message)
+
 
 class UserTests(TestCase):
     def test_user(self):
