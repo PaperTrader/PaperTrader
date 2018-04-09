@@ -1,9 +1,16 @@
 from django.test import TestCase
 from PaperTraderApp.models import StockModel
 from PaperTraderApp.StockHandler.StockHandler import StockScraper
+from PaperTraderApp.StockHandler.StockObserver import StockObserver
+from PaperTraderApp.StockHandler.Stock import Stock
 from PaperTraderApp.Users.Trader import Trader
 from PaperTraderApp.Balance.Balance import Balance, BalanceException
 
+class ObserverTests(TestCase):
+    def test_observer(self):
+        s = Stock('Google Inc', 'GOOG', 90.0)
+        StockObserver(s)
+        s.notifyObservers()
 class BalanceTests(TestCase):
     def test_balance(self):
         b = Balance()

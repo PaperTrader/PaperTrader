@@ -1,4 +1,5 @@
 from PaperTraderApp.StockHandler.Observer import Observer
+
 class Stock:
     def __init__(self, name, symbol, price):
         self.__name = name
@@ -23,10 +24,10 @@ class Stock:
     def attach(self, observer):
         if not isinstance(observer, Observer):
             raise InvalidObserverException("Invalid observer type")
-        observers.append(observer)
+        self.observers.append(observer)
    
     def notifyObservers(self):
-        for observer in observers:
+        for observer in self.observers:
             observer.update()
 
 class InvalidObserverException(Exception):
