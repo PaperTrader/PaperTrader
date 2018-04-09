@@ -10,7 +10,7 @@ MAX_DIGITS = 20
 
 class StockModel(models.Model):
     name = models.CharField(max_length=MAX_LENGTH_NAME)
-    symbol = models.CharField(max_length=MAX_LENGTH_SYMB, primary_key=True)
+    symbol = models.CharField(max_length=MAX_LENGTH_SYMB)
     opening = models.DecimalField(max_digits=MAX_DIGITS, decimal_places=2)
     closing = models.DecimalField(max_digits=MAX_DIGITS, decimal_places=2)
     high = models.DecimalField(max_digits=MAX_DIGITS, decimal_places=2)
