@@ -2,6 +2,9 @@ import json
 import urllib.request
 import datetime
 from enum import Enum
+from PaperTraderApp.StockHandler.Stock import Stock
+import http.client
+
 
 API_KEY = "ZB98IZZOUGC86XX6"
 class Singleton(type):
@@ -16,6 +19,14 @@ class Singleton(type):
 
 '''
 {'1. open': '93.7400', '2. high': '93.9000', '3. low': '92.1100', '4. close': '92.8900', '5. volume': '31752589'} (
+'''
+
+'''
+Modifications to be done:
+    - That copy paste code of result = self.getQuote(symbol) in all of the #get functions, is no bueno. We should store the data and then access it until we modify the Singleton
+        - But wait? Isn't that creating a global variable. Isn't that exactly what Singleton isn't supposed to be doing?
+        - Is Singleton even the right thing to be doing here? Using it to condense the API calls so just one class....hmmm
+
 '''
 class StockScraper(metaclass=Singleton):
     def getQuote(self, symbol):
@@ -55,4 +66,3 @@ class StockScraper(metaclass=Singleton):
         shift = datetime.timedelta(max(1,(today.weekday() + 6) % 7 - 3))
         today = today - shift
         return str(today).split()[0]
-
