@@ -5,6 +5,7 @@ from PaperTraderApp.StockHandler.StockObserver import StockObserver
 from PaperTraderApp.StockHandler.Stock import Stock
 from PaperTraderApp.Users.Trader import Trader
 from PaperTraderApp.Balance.Balance import Balance, BalanceException
+from PaperTraderApp.Portfolio.Portfolio import Portfolio, StockException
 
 class ObserverTests(TestCase):
     def test_observer(self):
@@ -107,5 +108,26 @@ class StockTests(TestCase):
         s = StockScraper()
         value = s.getVolume('GOOG')
         self.assertGreaterEqual(float(value), 0.0)
+
+class PortfolioTests(TestCase):
+    def test_portfolio_value(self):
+        p = Portfolio()
+        self.assertEquals(p.getTotalValue(), 0.0)
+
+    def test_portfolio_buy(self):
+        p = Portfolio()
+        s = Stock('Google Inc', 'GOOG', 90.0)
+        try:
+            p.buy(s, 2)
+        except BalanceException as e:
+            self.assertEquals("Value invalid for function", e.message)
+
+    def test_portfolio_sell(self):
+        p = Portfolio()
+        s = Stock('Google Inc', 'GOOG', 90.0)
+        try:
+            p.sell(s, 2)
+        except StockException as e:
+            self.assertEquals("Insufficient number of stock", e.message)
 
 # Create your tests here.
