@@ -8,9 +8,10 @@ from PaperTraderApp.Balance.Balance import Balance, BalanceException
 
 class ObserverTests(TestCase):
     def test_observer(self):
-        s = Stock('Google Inc', 'GOOG', 90.0)
+        s = Stock('Google Inc', 'GOOG', 0.0)
         StockObserver(s)
         s.notifyObservers()
+        self.assertNotEquals(s.getPrice(), 0.0)
 class BalanceTests(TestCase):
     def test_balance(self):
         b = Balance()
