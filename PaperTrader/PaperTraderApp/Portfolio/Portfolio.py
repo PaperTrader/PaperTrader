@@ -21,8 +21,11 @@ class Portfolio:
         return value + self.__balance.getBalance()
 
 
-    def getStockQuantity(self):
-        pass
+    def getStockQuantity(self, stock):
+        if stock.getSymbol() not in self.__stocks:
+            raise StockException
+
+        return self.__stocks[stock.getSymbol()][0]
 
     def buy(stock, quantity):
         '''
