@@ -27,7 +27,7 @@ class Portfolio:
 
         return self.__stocks[stock.getSymbol()][0]
 
-    def buy(stock, quantity):
+    def buy(self, stock, quantity):
         '''
             this will handle the balance exceptions
         '''
@@ -38,7 +38,7 @@ class Portfolio:
         '''
         self.__stocks[stock.getSymbol()] = (quantity, stock.getPrice())
 
-    def sell(stock, quantity):
+    def sell(self, stock, quantity):
         if stock.getSymbol() not in self.__stocks:
             raise StockException
 

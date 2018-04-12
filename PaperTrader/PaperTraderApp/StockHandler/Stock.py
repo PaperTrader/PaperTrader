@@ -19,7 +19,7 @@ class Stock:
         return self.__price
 
     def _update(self, price):
-        self.price = price
+        self.__price = price
 
     def attach(self, observer):
         if not isinstance(observer, Observer):

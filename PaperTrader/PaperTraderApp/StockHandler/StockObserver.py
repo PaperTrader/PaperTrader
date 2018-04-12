@@ -12,7 +12,6 @@ class StockObserver(Observer):
     Also what we want is to update the price!
     '''
     def update(self):
-        print("AAAA")
         stockModel = StockModel(symbol=self.stock_subject.getSymbol()) 
         stockScraper = StockScraper()
         updateQuote = stockScraper.getQuote(self.stock_subject.getSymbol())
@@ -21,4 +20,5 @@ class StockObserver(Observer):
         stockModel.high = updateQuote['2. high']
         stockModel.low = updateQuote['3. low']
         stockModel.volume = updateQuote['5. volume']
-        stockModel.save() 
+        stockModel.save()
+        self.stock_subject._update(stockModel.opening)
