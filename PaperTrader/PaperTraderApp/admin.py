@@ -1,10 +1,6 @@
 from django.contrib import admin
-from PaperTraderApp.models import StockModel
+from PaperTraderApp.models import StockModel, AdminStockModel
 
 admin.site.register(StockModel)
-
-# Register your models here.
-
-
-
+admin.site.register(AdminStockModel)
 

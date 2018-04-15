@@ -3,8 +3,8 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic import ListView
 from django.urls import reverse, reverse_lazy
 
-from PaperTraderApp.models import StockModel
-from PaperTraderApp.StockHandler.StockHandler import StockScraper
+from PaperTraderApp.models import StockModel, AdminStockModel
+from PaperTraderApp.StockHandler.StockScraper import StockScraper
 
 # Create your views here.
 

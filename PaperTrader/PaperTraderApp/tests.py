@@ -1,11 +1,17 @@
 from django.test import TestCase
 from PaperTraderApp.models import StockModel
-from PaperTraderApp.StockHandler.StockHandler import StockScraper
+from PaperTraderApp.StockHandler.StockScraper import StockScraper
 from PaperTraderApp.StockHandler.StockObserver import StockObserver
 from PaperTraderApp.StockHandler.Stock import Stock
 from PaperTraderApp.Users.Trader import Trader
 from PaperTraderApp.Balance.Balance import Balance, BalanceException
 from PaperTraderApp.Portfolio.Portfolio import Portfolio, StockException
+from PaperTraderApp.StockHandler.StockFactory import StockFactory
+
+class StockFactoryTests(TestCase):
+    def test_StockFactory(self):
+        s = StockFactory()
+        s.createStockObject('Tesla', 'TSLA')
 
 class ObserverTests(TestCase):
     def test_observer(self):
@@ -13,6 +19,7 @@ class ObserverTests(TestCase):
         StockObserver(s)
         s.notifyObservers()
         self.assertNotEquals(s.getPrice(), 0.0)
+
 class BalanceTests(TestCase):
     def test_balance(self):
         b = Balance()
@@ -79,34 +86,21 @@ class StockTests(TestCase):
                            symbol="GOOG")
         self.assertEquals(str(stock), 'Google Inc (GOOG)')
     
-    def test_stockscraper_singleton(self):
-        s = StockScraper()
-        s2 = StockScraper()
-        self.assertEquals(s, s2)
-
-    def test_stockscraper_open(self):
-        s = StockScraper()
-        value = s.getOpen('GOOG')
+    def test_stockscraper_all(self):
+        s = StockScraper('GOOG')
+        value = s.getOpen()
         self.assertGreaterEqual(float(value), 0.0)
 
-    def test_stockscraper_close(self):
-        s = StockScraper()
-        value = s.getClose('GOOG')
+        value = s.getClose()
         self.assertGreaterEqual(float(value), 0.0)
 
-    def test_stockscraper_high(self):
-        s = StockScraper()
-        value = s.getHigh('GOOG')
+        value = s.getHigh()
         self.assertGreaterEqual(float(value), 0.0)
 
-    def test_stockscraper_low(self):
-        s = StockScraper()
-        value = s.getLow('GOOG')
+        value = s.getLow()
         self.assertGreaterEqual(float(value), 0.0)
 
-    def test_stockscraper_volume(self):
-        s = StockScraper()
-        value = s.getVolume('GOOG')
+        value = s.getVolume()
         self.assertGreaterEqual(float(value), 0.0)
 
 class PortfolioTests(TestCase):
