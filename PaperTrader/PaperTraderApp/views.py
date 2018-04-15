@@ -21,13 +21,13 @@ class CreateStockView(CreateView):
         return reverse('stock-list')
 
     def form_valid(self, form):
-        s = StockScraper()
         symbol = form.instance.symbol
-        form.instance.opening = s.getOpen(form.instance.symbol)
-        form.instance.closing = s.getClose(form.instance.symbol)
-        form.instance.high = s.getHigh(form.instance.symbol)
-        form.instance.low = s.getLow(form.instance.symbol)
-        form.instance.volume = s.getVolume(form.instance.symbol)
+        s = StockScraper(symbol)
+        form.instance.opening = s.getOpen()
+        form.instance.closing = s.getClose()
+        form.instance.high = s.getHigh()
+        form.instance.low = s.getLow()
+        form.instance.volume = s.getVolume()
         return super(CreateStockView, self).form_valid(form)
 
 class DeleteStockView(DeleteView):
