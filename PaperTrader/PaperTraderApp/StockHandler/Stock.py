@@ -30,6 +30,9 @@ class Stock:
         for observer in self.observers:
             observer.update()
 
+    def __repr__(self):
+        return "{} ({})".format(self.__name, self.__symbol)
+
 class InvalidObserverException(Exception):
     def __init__(self, message):
         self.message = message

@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import PaperTraderApp.views
+from PaperTraderApp.views import update_stock_info
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('stock-list/', PaperTraderApp.views.ListStockView.as_view(), name="stock-list"),
     path('create-stock/', PaperTraderApp.views.CreateStockView.as_view(), name="stock-new"),
     path('delete-stock/<int:pk>', PaperTraderApp.views.DeleteStockView.as_view(), name="stock-delete"),
+    path('update_stock_info', update_stock_info, name="update"),
 ]

@@ -11,7 +11,15 @@ from PaperTraderApp.StockHandler.StockFactory import StockFactory
 class StockFactoryTests(TestCase):
     def test_StockFactory(self):
         s = StockFactory()
-        s.createStockObject('Tesla', 'TSLA')
+        stock = s.getStockObject('TSLA')
+
+    def test_general(self):
+        o, c, h ,l, v = 0.0, 0.0, 0.0, 0.0, 0.0
+        stock_tuples = [('Tesla Inc.', 'TSLA'), ('Google Inc', 'GOOG'), ('Nike Inc.','NKE')]
+        for name,symb in stock_tuples:
+            StockModel.objects.create(name=name, symbol=symb, opening=o,closing=c,high=h,low=l,volume=v)
+        s = StockFactory()
+        stock = s.getStockObject('GOOG')
 
 class ObserverTests(TestCase):
     def test_observer(self):

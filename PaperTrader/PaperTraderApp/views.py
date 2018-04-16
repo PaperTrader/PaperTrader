@@ -1,16 +1,24 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from django.urls import reverse, reverse_lazy
+from django.http import HttpResponseRedirect
 
 from PaperTraderApp.models import StockModel, AdminStockModel
 from PaperTraderApp.StockHandler.StockScraper import StockScraper
+from PaperTraderApp.StockHandler.StockFactory import StockFactory
 
 # Create your views here.
 
 class ListStockView(ListView):
     model = StockModel
     template_name = 'stock_list.html'
+
+def update_stock_info(something):
+    s = StockFactory()
+    s.updateAll()
+
+    return HttpResponseRedirect("/")
 
 class CreateStockView(CreateView):
     model = StockModel
