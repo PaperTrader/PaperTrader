@@ -1,10 +1,13 @@
 from PaperTraderApp.StockHandler.Observer import Observer
+import datetime as dt
+
 
 class Stock:
     def __init__(self, name, symbol, price):
         self.__name = name
         self.__symbol = symbol
         self.__price = price
+        self.__lastUpdate = dt.datetime.now()
 
         # Below is everthing for Observer
         self.observers = [] # List of observers attatched to this subject, right now will only be Stock
@@ -27,8 +30,12 @@ class Stock:
         self.observers.append(observer)
    
     def notifyObservers(self):
+        if(not (dt.datetime.now() - self.__lastUpdate).total_seconds() > 21600): #This is 6 hours
+            print("Unwilling to update. Current time diff is: ", (dt.datetime.now() - self.__lastUpdate).total_seconds())
+            return
         for observer in self.observers:
             observer.update()
+        self.__lastUpdate = dt.datetime.now()
 
     def __repr__(self):
         return "{} ({})".format(self.__name, self.__symbol)

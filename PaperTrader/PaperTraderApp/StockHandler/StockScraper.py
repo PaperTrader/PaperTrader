@@ -3,7 +3,7 @@ import urllib.request
 import datetime
 from enum import Enum
 from PaperTraderApp.StockHandler.Stock import Stock
-import http.client
+import time
 
 
 API_KEY = "ZB98IZZOUGC86XX6"
@@ -14,10 +14,12 @@ class StockScraper:
         self.quote = self.__getQuote(self.symbol)
     
     def __getQuote(self, symbol):
+        time.sleep(2)
         url = "https://www.alphavantage.co/query?function={0}&symbol={1}&interval=1min&outputsize=compact&apikey={2}".format('TIME_SERIES_DAILY', symbol, API_KEY)
-        print("----------------------------")
-        print(url)
-        print("----------------------------")
+        #print("----------------------------")
+        #print(url)
+        #print("----------------------------")
+        print("Attempting to get quote for {}".format(symbol))
 
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())

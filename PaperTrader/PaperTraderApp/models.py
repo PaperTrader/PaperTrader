@@ -32,7 +32,8 @@ class AdminStockModel(models.Model):
         return reverse("admin")
 
 class PortfolioModel(models.Model):
-    stocks = models.CharField(max_length=99999999999)
+    user = models.CharField(max_length=256)
+    stocks = models.CharField(max_length=99999)
     balance = models.FloatField()
 
     def set_stocks(stock_list, self):

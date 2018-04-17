@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 import PaperTraderApp.views
 from PaperTraderApp.views import update_stock_info
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,6 @@ urlpatterns = [
     path('create-stock/', PaperTraderApp.views.CreateStockView.as_view(), name="stock-new"),
     path('delete-stock/<int:pk>', PaperTraderApp.views.DeleteStockView.as_view(), name="stock-delete"),
     path('update_stock_info', update_stock_info, name="update"),
+    path('login/', auth_views.login, name="login"),
+    path('logout/', auth_views.logout, name="logout"),
 ]

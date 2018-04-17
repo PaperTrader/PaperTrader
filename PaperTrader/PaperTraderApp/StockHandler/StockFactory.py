@@ -7,13 +7,12 @@ from PaperTraderApp.StockHandler.StockScraper import StockScraper
 # Use the FlyWeight design pattern?
 
 class StockFactory:
-    def __init__(self):
-        self.stock_list = {}
+    stock_list = {}
     def getStockObject(self, symbol):
-        if(symbol in self.stock_list.keys()):
-            return self.stock_list[symbol]
-        self.stock_list[symbol] = self.createStockObject(symbol)
-        return self.stock_list[symbol]
+        if(symbol in StockFactory.stock_list.keys()):
+            return StockFactory.stock_list[symbol]
+        StockFactory.stock_list[symbol] = self.createStockObject(symbol)
+        return StockFactory.stock_list[symbol]
 
     def createStockObject(self, symb):
         model = StockModel(symbol=symb)
@@ -26,5 +25,4 @@ class StockFactory:
         stocks = StockModel.objects.values('name', 'symbol')
         for item in stocks:
             stock = self.getStockObject(item['symbol'])
-            print("Attempting to update {}".format(stock))
             stock.notifyObservers()
