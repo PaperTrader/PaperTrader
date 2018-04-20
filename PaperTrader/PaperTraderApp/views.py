@@ -3,8 +3,9 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 
-from PaperTraderApp.models import StockModel, AdminStockModel
+from PaperTraderApp.models import StockModel, AdminStockModel, PortfolioModel
 from PaperTraderApp.StockHandler.StockScraper import StockScraper
 from PaperTraderApp.StockHandler.StockFactory import StockFactory
 
@@ -20,6 +21,15 @@ def update_stock_info(something):
 
     return HttpResponseRedirect("/")
 
+def add_to_portfolio(request, pk):
+    model = PortfolioModel
+    stock = StockModel.objects.get(pk=pk)
+    model.objects.create(user="Dante", stocks=str(pk), balance=0.0)
+    print(pk)
+    print(stock)
+    return HttpResponseRedirect("/")
+    #return render_to_response("portfolio.html", {'stocks' : stock})
+    
 class CreateStockView(CreateView):
     model = StockModel
     template_name = 'create_stock.html'
@@ -42,3 +52,12 @@ class DeleteStockView(DeleteView):
     model = StockModel
     template_name = 'stock_confirm_delete.html'
     success_url = reverse_lazy('stock-list')
+
+class DeleteFromPortfolioView(DeleteView):
+    model = PortfolioModel
+    template_name = 'stock_confirm_delete.html'
+    success_url = reverse_lazy('portfolio')
+
+class PortfolioView(ListView):
+    model = PortfolioModel
+    template_name = 'portfolio.html'

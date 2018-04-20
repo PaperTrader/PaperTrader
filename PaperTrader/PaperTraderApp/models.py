@@ -40,5 +40,8 @@ class PortfolioModel(models.Model):
         self.stocks = json.dumps(stock_list)
     def get_stocks(self):
         return json.loads(self.stocks)
+
+    def get_absolute_url(self):
+        return reverse("portfolio", kwargs={'pk' : self.pk})
     
 

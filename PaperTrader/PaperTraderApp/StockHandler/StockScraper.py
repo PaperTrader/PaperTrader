@@ -19,7 +19,7 @@ class StockScraper:
         #print("----------------------------")
         #print(url)
         #print("----------------------------")
-        print("Attempting to get quote for {}".format(symbol))
+        #print("Attempting to get quote for {}".format(symbol))
 
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())

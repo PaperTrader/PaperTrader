@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import PaperTraderApp.views
-from PaperTraderApp.views import update_stock_info
+from PaperTraderApp.views import update_stock_info, add_to_portfolio
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -25,7 +25,10 @@ urlpatterns = [
     path('stock-list/', PaperTraderApp.views.ListStockView.as_view(), name="stock-list"),
     path('create-stock/', PaperTraderApp.views.CreateStockView.as_view(), name="stock-new"),
     path('delete-stock/<int:pk>', PaperTraderApp.views.DeleteStockView.as_view(), name="stock-delete"),
+    path('delte-portfolio-stock/<int:pk>', PaperTraderApp.views.DeleteFromPortfolioView.as_view(), name="portfolio-remove"),
+    path('portfolio', PaperTraderApp.views.PortfolioView.as_view(), name="portfolio"),
     path('update_stock_info', update_stock_info, name="update"),
+    path('add_to_portfolio/<int:pk>', add_to_portfolio, name="portfolio-add"),
     path('login/', auth_views.login, name="login"),
     path('logout/', auth_views.logout, name="logout"),
 ]

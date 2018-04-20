@@ -7,7 +7,7 @@ class Stock:
         self.__name = name
         self.__symbol = symbol
         self.__price = price
-        self.__lastUpdate = dt.datetime.now()
+        self.__lastUpdate = None
 
         # Below is everthing for Observer
         self.observers = [] # List of observers attatched to this subject, right now will only be Stock
@@ -30,9 +30,10 @@ class Stock:
         self.observers.append(observer)
    
     def notifyObservers(self):
-        if(not (dt.datetime.now() - self.__lastUpdate).total_seconds() > 21600): #This is 6 hours
-            print("Unwilling to update. Current time diff is: ", (dt.datetime.now() - self.__lastUpdate).total_seconds())
-            return
+        if(self.__lastUpdate is not  None):
+            if(not (dt.datetime.now() - self.__lastUpdate).total_seconds() > 21600): #This is 6 hours
+                print("Unwilling to update. Current time diff is: ", (dt.datetime.now() - self.__lastUpdate).total_seconds())
+                return
         for observer in self.observers:
             observer.update()
         self.__lastUpdate = dt.datetime.now()
