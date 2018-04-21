@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import PaperTraderApp.views
-from PaperTraderApp.views import update_stock_info, add_to_portfolio
+from PaperTraderApp.views import update_stock_info, add_to_portfolio, signup
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.forms import UserCreationForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +32,5 @@ urlpatterns = [
     path('add_to_portfolio/<int:pk>/<str:user>', add_to_portfolio, name="portfolio-add"),
     path('login/', auth_views.login, name="login"),
     path('logout/', auth_views.logout, name="logout"),
+    path('signup/', signup, name="signup"),
 ]
