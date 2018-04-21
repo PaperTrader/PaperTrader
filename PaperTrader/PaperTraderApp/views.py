@@ -71,9 +71,18 @@ class DeleteFromPortfolioView(DeleteView):
     template_name = 'stock_confirm_delete.html'
     success_url = reverse_lazy('portfolio')
 
-class PortfolioView(ListView):
-    model = PortfolioModel
-    template_name = 'portfolio.html'
+'''class PortfolioView(ListView):
+    portfolio = PortfolioModel.objects.get(user=request.user)
+
+    template_name = 'portfolio.html'''
+
+def getPortfolio(request):
+    print(request.user)
+    portfolio = PortfolioModel.objects.get_or_create(user=request.user)
+    stocks = portfolio.get_stocks()
+
+    return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks,  'user' : request.user})
+
 
 def signup(request):
     # if request.user.is_authenticated:
