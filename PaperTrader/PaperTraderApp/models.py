@@ -33,11 +33,13 @@ class AdminStockModel(models.Model):
 
 class PortfolioModel(models.Model):
     user = models.CharField(max_length=256)
-    stocks = models.CharField(max_length=99999)
-    balance = models.FloatField()
+    stocks = models.CharField(max_length=99999999, default=json.dumps({}))
+    balance = models.FloatField(default=0.0)
 
-    def set_stocks(stock_list, self):
+    def set_stocks(self, stock_list):
+        print(stock_list)
         self.stocks = json.dumps(stock_list)
+
     def get_stocks(self):
         return json.loads(self.stocks)
 

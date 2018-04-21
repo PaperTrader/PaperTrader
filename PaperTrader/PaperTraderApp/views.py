@@ -33,12 +33,12 @@ def add_to_portfolio(request, pk, user):
     stockObj = stockFactory.getStockObject(stock.symbol)
     obj = model.objects.get_or_create(user=user)
     current_stocks = obj[0].get_stocks()
-    print(type(current_stocks))
+    if(stockObj.getSymbol() in current_stocks.keys()):
+        print(":)")
     current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
-    print(current_stocks)
+    print(type(current_stocks))
     obj[0].set_stocks(current_stocks)
     obj[0].save()
-    print(obj[0].stocks)
     print(stockObj)
     return HttpResponseRedirect("/")
     #return render_to_response("portfolio.html", {'stocks' : stock})
