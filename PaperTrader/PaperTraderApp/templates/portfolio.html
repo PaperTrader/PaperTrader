@@ -31,6 +31,12 @@
 	</center>
 </header>
 </div>
+<center>
+<div>
+	<h4></h4>
+	<h4>{{ user }} Portfolio</h4>
+</div>
+</center>
 
 <br><br>
 <table class="table">
@@ -38,16 +44,17 @@
 		<tr>
 			<th scope="col">Stocks</th>
 			<th scope="col">Balance</th>
+			<th scope="col">Remove</th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for s in object_list %}
-		<tr>
-			<th>{{ s.id }}</th>
-			<th>{{ s.stocks }}</th>
-			<th>{{ s.balance }}</th>
-			<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-remove" pk=s.id %}">Remove</a></th>
-		</tr>
-		{% endfor %}
+	
+			{% for key, value in stocks.items %}
+			<tr>
+				<th>{{ key }}</th>
+				<th>{{ value }}</th>
+				<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-remove" pk=portfolio.id %}">Remove</a></th>
+			</tr>
+			{% endfor %}
 	</tbody>
 </table>
