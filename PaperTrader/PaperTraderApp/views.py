@@ -28,12 +28,20 @@ def update_stock_info(something):
 
     return HttpResponseRedirect("/")
 
-def add_to_portfolio(request, pk):
+def add_to_portfolio(request, pk, user):
     model = PortfolioModel
     stock = StockModel.objects.get(pk=pk)
-    model.objects.create(user="Dante", stocks=str(pk), balance=0.0)
-    print(pk)
-    print(stock)
+    stockFactory = StockFactory()
+    stockObj = stockFactory.getStockObject(stock.symbol)
+    obj = model.objects.get_or_create(user=user)
+    current_stocks = obj[0].get_stocks()
+    if(stockObj.getSymbol() in current_stocks.keys()):
+        print(":)")
+    current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
+    print(type(current_stocks))
+    obj[0].set_stocks(current_stocks)
+    obj[0].save()
+    print(stockObj)
     return HttpResponseRedirect("/")
     #return render_to_response("portfolio.html", {'stocks' : stock})
     

@@ -43,7 +43,7 @@
 			<th scope="col">Open / Close</th>
 			<th scope="col">High / Low</th>
 			<th scope="col">Volume</th>
-			<th scope="col">Delete</th>
+			<th scope="col">Add to Portfolio</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -55,7 +55,7 @@
 			<th>{{ stock.opening }}<strong> / </strong>{{ stock.closing }}</th>
 			<th>{{ stock.high }}<strong> / </strong>{{ stock.low }}</th>
 			<th>{{ stock.volume }}</th>
-			<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-add" pk=stock.id %}">Add to Portfolio</a></th>
+			<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-add" pk=stock.id user="dante" %}">Add to Portfolio</a></th>
 		</tr>
 		{% endfor %}
 	</tbody>
