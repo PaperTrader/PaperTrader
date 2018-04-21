@@ -4,6 +4,11 @@ from django.views.generic import ListView
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.forms import ModelForm
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 
 from PaperTraderApp.models import StockModel, AdminStockModel, PortfolioModel
 from PaperTraderApp.StockHandler.StockScraper import StockScraper
@@ -61,3 +66,29 @@ class DeleteFromPortfolioView(DeleteView):
 class PortfolioView(ListView):
     model = PortfolioModel
     template_name = 'portfolio.html'
+
+def signup(request):
+    # if request.user.is_authenticated:
+    #     return HttpResponseRedirect('/signup')
+    if request.method == 'GET':
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # https://docs.djangoproject.com/en/1.11/topics/forms/modelforms/#the-save-method
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            # user = authenticate(username=username, password=password)
+            # login(request, user)
+            return HttpResponseRedirect("/")
+        else:
+            # If there were errors, we render the form with these
+            # errors
+            return render(request, 'signup.html', {'form': form})
+
+
+
+
+
