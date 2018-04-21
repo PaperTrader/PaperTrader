@@ -14,6 +14,8 @@ from PaperTraderApp.models import StockModel, AdminStockModel, PortfolioModel
 from PaperTraderApp.StockHandler.StockScraper import StockScraper
 from PaperTraderApp.StockHandler.StockFactory import StockFactory
 
+from django.contrib.auth import authenticate, login
+
 # Create your views here.
 
 class ListStockView(ListView):
@@ -86,6 +88,7 @@ def getPortfolio(request):
 
 def signup(request):
     # if request.user.is_authenticated:
+    #     return HttpResponseRedirect("/")
     #     return HttpResponseRedirect('/signup')
     if request.method == 'GET':
         form = UserCreationForm()
@@ -97,8 +100,8 @@ def signup(request):
             form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=password)
-            # login(request, user)
+            user = authenticate(username=username, password=password)
+            login(request, user)
             return HttpResponseRedirect("/")
         else:
             # If there were errors, we render the form with these
