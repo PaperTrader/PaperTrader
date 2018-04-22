@@ -113,11 +113,11 @@ class StockTests(TestCase):
 
 class PortfolioTests(TestCase):
     def test_portfolio_value(self):
-        p = Portfolio()
+        p = Portfolio("dante")
         self.assertEquals(p.getTotalValue(), 0.0)
 
     def test_portfolio_buy(self):
-        p = Portfolio()
+        p = Portfolio("dante")
         s = Stock('Google Inc', 'GOOG', 90.0)
         try:
             p.buy(s, 2)
@@ -125,7 +125,7 @@ class PortfolioTests(TestCase):
             self.assertEquals("Value invalid for function", e.message)
 
     def test_portfolio_sell(self):
-        p = Portfolio()
+        p = Portfolio("dante")
         s = Stock('Google Inc', 'GOOG', 90.0)
         try:
             p.sell(s, 2)

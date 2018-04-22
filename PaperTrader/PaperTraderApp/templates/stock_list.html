@@ -16,24 +16,53 @@
 <div class="align">
 	<center>
 	<ul class="nav nav-pills nav-fill">
+	
+	{% if user.is_anonymous %}
+	<li class="nav-item">
+	  <a class="nav-link disabled" href="/login">Login To Trade</a>
+	</li>
+	{% else %}
 	<li class="nav-item">
 	  <a class="nav-link active" href="/">Stock List</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="{% url "stock-new" %}">Add Stock</a>
-	</li>
+	{% if user.is_superuser %}	
+		<li class="nav-item">
+		  <a class="nav-link" href="{% url "stock-new" %}">Add Stock</a>
+		</li>
+	{% endif %}
+
 	<li class="nav-item">
 	  <a class="nav-link" href="{% url "update" %}">Update View</a>
 	</li>
 	<li class="nav-item">
 	  <a class="nav-link" href="{% url "portfolio" %}">View Portfolio</a>
 	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/logout?next=/login">Logout</a>
+	</li>
 	</ul>
+	<h4> Welcome, {{ user }}</h4>
+	{% endif %}
 	</center>
 </header>
 </div>
 
 <br><br>
+{% if user.is_anonymous %}
+<div class="container">
+<div class="jumbotron">
+
+	<center>
+	<h1 class="display-4">The future of investing</h1>
+	<p class="lead">An alternative to traditional paper-trading applications</p>
+	<hr class="my-4">
+	<p> Sign up or Login to start </p>
+		<a class="btn btn-secondary btn-lg" href="/login" role="button">Login</a>
+		<a class="btn btn-secondary btn-lg" href="/signup" role="button">Sign Up</a>
+	</center>
+</div>
+</div>
+{% else %}
 <table class="table">
 	<thead class="thead-dark">
 		<tr>
@@ -55,8 +84,9 @@
 			<th>{{ stock.opening }}<strong> / </strong>{{ stock.closing }}</th>
 			<th>{{ stock.high }}<strong> / </strong>{{ stock.low }}</th>
 			<th>{{ stock.volume }}</th>
-			<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-add" pk=stock.id user="dante" %}">Add to Portfolio</a></th>
+			<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-add" pk=stock.id %}">Add to Portfolio</a></th>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+{% endif %}

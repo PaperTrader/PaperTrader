@@ -1,11 +1,15 @@
 from PaperTraderApp.Balance.Balance import Balance
+from PaperTraderApp.models import PortfolioModel
 class Portfolio:
-    def __init__(self):
+    def __init__(self, user):
         self.__balance = Balance()
         self.__stocks = {}
+        self.__user = user
+#        self.__portfolio = PortfolioModel.objects.get(user=self.__user)
 
     def getStocks(self):
         return self.__stocks
+
 
     def getHistory(self):
         '''

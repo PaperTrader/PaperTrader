@@ -28,20 +28,16 @@ def update_stock_info(something):
 
     return HttpResponseRedirect("/")
 
-def add_to_portfolio(request, pk, user):
+def add_to_portfolio(request, pk):
     model = PortfolioModel
     stock = StockModel.objects.get(pk=pk)
     stockFactory = StockFactory()
     stockObj = stockFactory.getStockObject(stock.symbol)
-    obj = model.objects.get_or_create(user=user)
-    current_stocks = obj[0].get_stocks()
-    if(stockObj.getSymbol() in current_stocks.keys()):
-        print(":)")
+    obj = model.objects.get_or_create(pk=request.user.id)[0]
+    current_stocks = obj.get_stocks()
     current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
-    print(type(current_stocks))
-    obj[0].set_stocks(current_stocks)
-    obj[0].save()
-    print(stockObj)
+    obj.set_stocks(current_stocks)
+    obj.save()
     return HttpResponseRedirect("/")
     #return render_to_response("portfolio.html", {'stocks' : stock})
     
@@ -68,23 +64,21 @@ class DeleteStockView(DeleteView):
     template_name = 'stock_confirm_delete.html'
     success_url = reverse_lazy('stock-list')
 
-class DeleteFromPortfolioView(DeleteView):
-    model = PortfolioModel
-    template_name = 'stock_confirm_delete.html'
-    success_url = reverse_lazy('portfolio')
-
-'''class PortfolioView(ListView):
-    portfolio = PortfolioModel.objects.get(user=request.user)
-
-    template_name = 'portfolio.html'''
+def delete_from_portfolio(request, key):
+    portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
+    current_stocks = portfolio.get_stocks()
+    del current_stocks[key]
+    portfolio.set_stocks(current_stocks)
+    portfolio.save()
+    stocks = portfolio.get_stocks()
+    return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks,  'user' : request.user})
 
 def getPortfolio(request):
     print(request.user)
-    portfolio = PortfolioModel.objects.get_or_create(user=request.user)
+    portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
     stocks = portfolio.get_stocks()
 
     return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks,  'user' : request.user})
-
 
 def signup(request):
     # if request.user.is_authenticated:

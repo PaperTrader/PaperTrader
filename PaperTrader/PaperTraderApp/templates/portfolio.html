@@ -18,14 +18,19 @@
 	<li class="nav-item">
 	  <a class="nav-link" href="/">Stock List</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="{% url "stock-new" %}">Add Stock</a>
-	</li>
+	{% if user.is_superuser %}	
+		<li class="nav-item">
+		  <a class="nav-link" href="{% url "stock-new" %}">Add Stock</a>
+		</li>
+	{% endif %}
 	<li class="nav-item">
 	  <a class="nav-link" href="{% url "update" %}">Update View</a>
 	</li>
 	<li class="nav-item">
 	  <a class="nav-link active" href="#">View Portfolio</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/logout?next=/login">Logout</a>
 	</li>
 	</ul>
 	</center>
@@ -39,11 +44,13 @@
 </center>
 
 <br><br>
+{% load PaperTraderApp_extras %}
 <table class="table">
 	<thead class="thead-dark">
 		<tr>
 			<th scope="col">Stocks</th>
-			<th scope="col">Balance</th>
+			<th scope="col">Quantity</th>
+			<th scope="col">Net Investment</th>
 			<th scope="col">Remove</th>
 		</tr>
 	</thead>
@@ -53,7 +60,8 @@
 			<tr>
 				<th>{{ key }}</th>
 				<th>{{ value }}</th>
-				<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-remove" pk=portfolio.id %}">Remove</a></th>
+				<th>${{ key|mul:value }}</th>
+				<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-remove" key=key %}">Remove</a></th>
 			</tr>
 			{% endfor %}
 	</tbody>
