@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 import json
-from PaperTraderApp.Balance.Balance import Balance
+from PaperTraderApp.Balance.Balance import Balance, BalanceException
 
 from PaperTraderApp.StockHandler.Stock import Stock
 #from PaperTraderApp.StockHandler.StockObserver import StockObserver
@@ -59,21 +59,31 @@ class PortfolioModel(models.Model):
         self.balance += amount
         self.save()
 
+
+    def sub(self, amount):
+        
+        if(amount > self.balance):
+            raise BalanceException
+        if(amount < 0):
+            raise BalanceException
+
+        self.balance -= amount
+        self.save()
+
     def buy(self, stockObj, quantity):
         '''
             this will handle the balance exceptions
         '''
         #print(float(stockObj.getPrice()) * quantity)
-        self.set_balance(self.balance_obj.sub(float(stockObj.getPrice()) * quantity))
+        self.sub(float(stockObj.getPrice()) * quantity)
 
-        current_stocks = self.get_stocks()
-        current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
-        self.set_stocks(current_stocks)
-        self.save()
 
         '''
             store stock in dict as tuple of quantity and price ( price can be used for history/gain? )
         '''
-        self.__stocks[stock.getSymbol()] = (quantity, stock.getPrice())
+        current_stocks = self.get_stocks()
+        current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + quantity if stockObj.getSymbol() in current_stocks.keys() else 1
+        self.set_stocks(current_stocks)
+        self.save()
     
 

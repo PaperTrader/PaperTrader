@@ -7,9 +7,9 @@ class Balance:
             raise BalanceException
         self.__balance += amount
 
-    def sub(self, amount):
-        print(amount, self.__balance)
-        if(amount > self.__balance):
+    def sub(self, amount, balance):
+        print(amount, balance)
+        if(amount > balance):
             raise BalanceException
         if(amount < 0):
             raise BalanceException
