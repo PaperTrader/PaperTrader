@@ -8,12 +8,14 @@ class Balance:
         self.__balance += amount
 
     def sub(self, amount):
+        print(amount, self.__balance)
         if(amount > self.__balance):
             raise BalanceException
         if(amount < 0):
             raise BalanceException
 
         self.__balance -= amount
+        return self.__balance
 
     def set(self, amount):
         self.__balance = amount

@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 import json
+from PaperTraderApp.Balance.Balance import Balance
 
 from PaperTraderApp.StockHandler.Stock import Stock
 #from PaperTraderApp.StockHandler.StockObserver import StockObserver
@@ -35,6 +36,10 @@ class PortfolioModel(models.Model):
     user = models.CharField(max_length=256)
     stocks = models.CharField(max_length=99999999, default=json.dumps({}))
     balance = models.FloatField(default=0.0)
+    balance_obj = Balance()
+
+    def get_balance(self):
+        return self.balance
 
     def set_stocks(self, stock_list):
         print(stock_list)
@@ -45,5 +50,30 @@ class PortfolioModel(models.Model):
 
     def get_absolute_url(self):
         return reverse("portfolio", kwargs={'pk' : self.pk})
+
+    def set_balance(self, balance):
+        self.balance = balance
+
+    def add_balance(self, amount):
+        self.balance_obj.add(amount)
+        self.balance += amount
+        self.save()
+
+    def buy(self, stockObj, quantity):
+        '''
+            this will handle the balance exceptions
+        '''
+        #print(float(stockObj.getPrice()) * quantity)
+        self.set_balance(self.balance_obj.sub(float(stockObj.getPrice()) * quantity))
+
+        current_stocks = self.get_stocks()
+        current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
+        self.set_stocks(current_stocks)
+        self.save()
+
+        '''
+            store stock in dict as tuple of quantity and price ( price can be used for history/gain? )
+        '''
+        self.__stocks[stock.getSymbol()] = (quantity, stock.getPrice())
     
 

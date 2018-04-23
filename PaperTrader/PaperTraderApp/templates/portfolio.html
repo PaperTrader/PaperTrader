@@ -27,7 +27,7 @@
 	  <a class="nav-link" href="{% url "update" %}">Update View</a>
 	</li>
 	<li class="nav-item">
-	  <a class="nav-link active" href="#">View Portfolio</a>
+	  <a class="nav-link active" href="{% url "portfolio" %}">View Portfolio</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link" href="/logout?next=/login">Logout</a>
@@ -37,9 +37,17 @@
 </header>
 </div>
 <center>
-<div>
+
 	<h4></h4>
 	<h4>{{ user }} Portfolio</h4>
+
+</center>
+
+<center>
+<div>
+	<h4></h4>
+	<h4>Current cash balance: ${{ balance }}</h4>
+	<a type="button" class="btn btn-outline-info"  href="{% url "add-cash" %}">Add Cash</a>
 </div>
 </center>
 

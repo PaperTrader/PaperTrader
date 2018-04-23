@@ -28,18 +28,45 @@ def update_stock_info(something):
 
     return HttpResponseRedirect("/")
 
+
+
 def add_to_portfolio(request, pk):
     model = PortfolioModel
     stock = StockModel.objects.get(pk=pk)
     stockFactory = StockFactory()
     stockObj = stockFactory.getStockObject(stock.symbol)
-    obj = model.objects.get_or_create(pk=request.user.id)[0]
-    current_stocks = obj.get_stocks()
-    current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
-    obj.set_stocks(current_stocks)
-    obj.save()
-    return HttpResponseRedirect("/")
+
+    portfolio = model.objects.get_or_create(pk=request.user.id)[0]
+
+    portfolio.buy(stockObj, 1)
+
+    '''current_stocks = portfolio.get_stocks()
+                current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
+                portfolio.set_stocks(current_stocks)
+                portfolio.save()'''
+
+    return HttpResponseRedirect("/portfolio")
     #return render_to_response("portfolio.html", {'stocks' : stock})
+
+def add_cash(request):
+    print("HEREEEE")
+    return render(request, 'add_cash.html')
+
+def add_cash_response(request):
+
+    #can refactor guard clauses later
+    if request.method == 'POST':
+        if request.POST.get('amount', False):
+            amount = int(request.POST['amount'])      
+
+            model = PortfolioModel
+            portfolio = model.objects.get_or_create(pk=request.user.id)[0]
+            portfolio.add_balance(amount)
+            return HttpResponseRedirect("/portfolio")            
+
+    return HttpResponseRedirect("/portfolio")
+
+
     
 class CreateStockView(CreateView):
     model = StockModel
@@ -65,20 +92,46 @@ class DeleteStockView(DeleteView):
     success_url = reverse_lazy('stock-list')
 
 def delete_from_portfolio(request, key):
+    
+    return render(request, 'portfolio_stock_confirm_remove.html', {'key' : key})
+
+def remove_stock_response(request, key):
+    if request.method != 'POST':
+        print("Error, request should be of type post in a form")
+        return HttpResponseRedirect("/portfolio")
+
     portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
     current_stocks = portfolio.get_stocks()
     del current_stocks[key]
     portfolio.set_stocks(current_stocks)
     portfolio.save()
     stocks = portfolio.get_stocks()
-    return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks,  'user' : request.user})
+    balance = portfolio.get_balance()
+
+    return HttpResponseRedirect("/portfolio")
+
+
+    '''portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
+                current_stocks = portfolio.get_stocks()
+                del current_stocks[key]
+                portfolio.set_stocks(current_stocks)
+                portfolio.save()
+                stocks = portfolio.get_stocks()
+                balance = portfolio.get_balance()
+            
+                return render(request, 'stock_confirm_delete.html', {'object': key })'''
+    #rendering a page keeps us at the delete page, we want to redirect
+    #return HttpResponseRedirect("/portfolio")
+
 
 def getPortfolio(request):
     print(request.user)
     portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
     stocks = portfolio.get_stocks()
+    balance = portfolio.get_balance()
+    print(balance)
 
-    return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks,  'user' : request.user})
+    return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks, 'balance': balance, 'user' : request.user})
 
 def signup(request):
     # if request.user.is_authenticated:

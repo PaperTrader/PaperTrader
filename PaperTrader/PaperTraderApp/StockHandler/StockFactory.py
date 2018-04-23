@@ -17,7 +17,7 @@ class StockFactory:
     def createStockObject(self, symb):
         model = StockModel(symbol=symb)
         scraper = StockScraper(symb)
-        stock = Stock(model.name, model.symbol, model.opening) 
+        stock = Stock(model.name, model.symbol, scraper.getOpen()) 
         StockObserver(stock)
         return stock
 

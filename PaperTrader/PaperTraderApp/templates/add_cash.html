@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<div class="container">
+<header>
+<center>
+<h1> PaperTrader </h1>
+<div class="alert alert-secondary">
+		Current Time:
+ 		<script language="javascript">
+ 		var today = new Date();
+ 		document.write(today);
+		</script>
+</div>
+</center>
+<div class="align">
+	<center>
+	<ul class="nav nav-pills nav-fill">
+	<li class="nav-item">
+	  <a class="nav-link" href="/">Stock List</a>
+	</li>
+	{% if user.is_superuser %}	
+		<li class="nav-item">
+		  <a class="nav-link active" href="{% url "stock-new" %}">Add Stock</a>
+		</li>
+	{% endif %}
+
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url "update" %}">Update View</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url "portfolio" %}">View Portfolio</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/logout?next=/login">Logout</a>
+	</li>
+	</ul>
+	</center>
+</header>
+<br><br>
+<center>
+<div class="container">
+<form action="{% url "add-cash-response" %}" method="POST">
+	{% csrf_token %}
+	$<input type="number" placeholder="Amount to add" name="amount" />
+	<button type="submit" class="btn btn-primary", id="save">Submit</button>
+</form>
+</div>
+</center>

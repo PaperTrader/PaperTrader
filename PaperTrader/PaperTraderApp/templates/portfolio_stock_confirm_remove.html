@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div class="container">
+	<div class="alert alert-danger" role="alert">
+	You're about to remove a stock!
+	</div>
+	<form action="{% url "remove-stock-response" key=key %}" method="POST">
+		{% csrf_token %}
+	    <p>Are you sure you want to remove "{{ key }}"?</p>
+	    <input class="btn btn-outline-success" type="submit" value="Confirm"/>
+	</form>
+	    <a class="btn btn-outline-danger" href="{% url "portfolio" %}">Cancel</a>
+</div>

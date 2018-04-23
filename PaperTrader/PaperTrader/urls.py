@@ -26,9 +26,15 @@ urlpatterns = [
     path('stock-list/', PaperTraderApp.views.ListStockView.as_view(), name="stock-list"),
     path('create-stock/', PaperTraderApp.views.CreateStockView.as_view(), name="stock-new"),
     path('delete-stock/<int:pk>', PaperTraderApp.views.DeleteStockView.as_view(), name="stock-delete"),
-    path('delte-portfolio-stock/<str:key>', delete_from_portfolio, name="portfolio-remove"),
+    path('delete-portfolio-stock/<str:key>', delete_from_portfolio, name="portfolio-remove"),
+    path('remove-stock-response/<str:key>', remove_stock_response, name="remove-stock-response"),
+
     #path('portfolio', PaperTraderApp.views.PortfolioView.as_view(), name="portfolio"),
     path('portfolio', getPortfolio, name="portfolio"),
+    path('add-cash', add_cash, name="add-cash"),
+    path('add-cash-response', add_cash_response, name="add-cash-response"),
+
+
     path('update_stock_info', update_stock_info, name="update"),
     path('add_to_portfolio/<int:pk>', add_to_portfolio, name="portfolio-add"),
     path('login/', auth_views.login, name="login"),
