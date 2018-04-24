@@ -83,7 +83,7 @@ class PortfolioModel(models.Model):
             store stock in dict as tuple of quantity and price ( price can be used for history/gain? )
         '''
         current_stocks = self.get_stocks()
-        current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + quantity if stockObj.getSymbol() in current_stocks.keys() else 1
+        current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + quantity if stockObj.getSymbol() in current_stocks.keys() else quantity
         self.set_stocks(current_stocks)
         self.save()
 

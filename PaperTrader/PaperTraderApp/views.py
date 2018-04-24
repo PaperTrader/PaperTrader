@@ -30,7 +30,19 @@ def update_stock_info(something):
 
 
 
-def add_to_portfolio(request, pk):
+def add_to_portfolio(request, pk, key):
+
+    return render(request, 'portfolio_add_stock_confirm.html', {'pk' : pk, 'key' : key})
+
+
+def buy_stock_response(request, pk):
+    if request.method != 'POST':
+        print("Error, request should be of type post in a form")
+        return HttpResponseRedirect("/portfolio")
+
+    if request.POST.get('amount', False):
+        amount = int(request.POST['amount'])
+
     model = PortfolioModel
     stock = StockModel.objects.get(pk=pk)
     stockFactory = StockFactory()
@@ -38,15 +50,10 @@ def add_to_portfolio(request, pk):
 
     portfolio = model.objects.get_or_create(pk=request.user.id)[0]
 
-    portfolio.buy(stockObj, 1)
-
-    '''current_stocks = portfolio.get_stocks()
-                current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + 1 if stockObj.getSymbol() in current_stocks.keys() else 1
-                portfolio.set_stocks(current_stocks)
-                portfolio.save()'''
-
+    portfolio.buy(stockObj, amount)
     return HttpResponseRedirect("/portfolio")
-    #return render_to_response("portfolio.html", {'stocks' : stock})
+
+
 
 def add_cash(request):
     print("HEREEEE")
