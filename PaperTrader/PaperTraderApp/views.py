@@ -125,11 +125,9 @@ def remove_stock_response(request, key):
 
 
 def getPortfolio(request):
-    print(request.user)
     portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
     stocks = portfolio.get_stocks()
     balance = portfolio.get_balance()
-    print(balance)
 
     return render(request, 'portfolio.html', {'portfolio': portfolio,'stocks': stocks, 'balance': balance, 'user' : request.user})
 

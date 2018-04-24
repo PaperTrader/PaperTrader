@@ -59,7 +59,7 @@
 			<th scope="col">Stocks</th>
 			<th scope="col">Quantity</th>
 			<th scope="col">Net Investment</th>
-			<th scope="col">Remove</th>
+			<th scope="col">Sell</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -69,7 +69,7 @@
 				<th>{{ key }}</th>
 				<th>{{ value }}</th>
 				<th>${{ key|mul:value }}</th>
-				<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-remove" key=key %}">Remove</a></th>
+				<th> <a type="button" class="btn btn-outline-info"  href="{% url "portfolio-remove" key=key %}">Sell</a></th>
 			</tr>
 			{% endfor %}
 	</tbody>
