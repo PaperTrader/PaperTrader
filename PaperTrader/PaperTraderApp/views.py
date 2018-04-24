@@ -95,18 +95,21 @@ def delete_from_portfolio(request, key):
     
     return render(request, 'portfolio_stock_confirm_remove.html', {'key' : key})
 
-def remove_stock_response(request, key):
+def sell_stock_response(request, key):
     if request.method != 'POST':
         print("Error, request should be of type post in a form")
         return HttpResponseRedirect("/portfolio")
 
+    if request.POST.get('amount', False):
+        amount = int(request.POST['amount'])
+
+    stock = StockModel.objects.get(symbol=key)
+    stockFactory = StockFactory()
+    stockObj = stockFactory.getStockObject(stock.symbol)
+
     portfolio = PortfolioModel.objects.get_or_create(pk=request.user.id)[0]
-    current_stocks = portfolio.get_stocks()
-    del current_stocks[key]
-    portfolio.set_stocks(current_stocks)
-    portfolio.save()
-    stocks = portfolio.get_stocks()
-    balance = portfolio.get_balance()
+    portfolio.sell(stockObj, amount)
+
 
     return HttpResponseRedirect("/portfolio")
 

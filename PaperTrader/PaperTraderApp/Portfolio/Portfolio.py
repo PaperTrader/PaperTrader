@@ -1,5 +1,5 @@
 from PaperTraderApp.Balance.Balance import Balance
-from PaperTraderApp.models import PortfolioModel
+
 class Portfolio:
     def __init__(self, user):
         self.__balance = Balance()

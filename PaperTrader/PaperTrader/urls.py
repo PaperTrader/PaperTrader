@@ -27,7 +27,7 @@ urlpatterns = [
     path('create-stock/', PaperTraderApp.views.CreateStockView.as_view(), name="stock-new"),
     path('delete-stock/<int:pk>', PaperTraderApp.views.DeleteStockView.as_view(), name="stock-delete"),
     path('delete-portfolio-stock/<str:key>', delete_from_portfolio, name="portfolio-remove"),
-    path('remove-stock-response/<str:key>', remove_stock_response, name="remove-stock-response"),
+    path('sell-stock-response/<str:key>', sell_stock_response, name="sell-stock-response"),
 
     #path('portfolio', PaperTraderApp.views.PortfolioView.as_view(), name="portfolio"),
     path('portfolio', getPortfolio, name="portfolio"),

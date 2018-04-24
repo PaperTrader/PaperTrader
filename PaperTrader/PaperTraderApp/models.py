@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 import json
 from PaperTraderApp.Balance.Balance import Balance, BalanceException
+from PaperTraderApp.Portfolio.Portfolio import StockException
 
 from PaperTraderApp.StockHandler.Stock import Stock
 #from PaperTraderApp.StockHandler.StockObserver import StockObserver
@@ -85,5 +86,32 @@ class PortfolioModel(models.Model):
         current_stocks[stockObj.getSymbol()] = current_stocks[stockObj.getSymbol()] + quantity if stockObj.getSymbol() in current_stocks.keys() else 1
         self.set_stocks(current_stocks)
         self.save()
+
+
+
+    def sell(self, stock, quantity_to_sell):
+        key = stock.getSymbol()
+        current_stocks = self.get_stocks()
+        if current_stocks[key] < quantity_to_sell:
+            raise StockException
+
+        current_stocks[key] -= quantity_to_sell
+        self.add_balance(float(stock.getPrice()) * quantity_to_sell)
+
+        if current_stocks[key] == 0:
+            del current_stocks[key]
+
+        self.set_stocks(current_stocks)
+        self.save()
+        stocks = self.get_stocks()
+        balance = self.get_balance()
+
+
+
+
+
+
+
+
     
 

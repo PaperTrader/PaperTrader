@@ -3,9 +3,10 @@
 	<div class="alert alert-danger" role="alert">
 	You're about to remove a stock!
 	</div>
-	<form action="{% url "remove-stock-response" key=key %}" method="POST">
+	<form action="{% url "sell-stock-response" key=key %}" method="POST">
 		{% csrf_token %}
-	    <p>Are you sure you want to remove "{{ key }}"?</p>
+	    <p>Are you sure you want to sell "{{ key }}"?</p>
+	    <input type="number" placeholder="Amount to sell" name="amount" />
 	    <input class="btn btn-outline-success" type="submit" value="Confirm"/>
 	</form>
 	    <a class="btn btn-outline-danger" href="{% url "portfolio" %}">Cancel</a>
