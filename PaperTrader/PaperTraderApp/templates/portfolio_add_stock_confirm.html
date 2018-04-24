@@ -5,7 +5,7 @@
 	</div>
 	<form action="{% url "buy-stock-response" pk=pk %}" method="POST">
 		{% csrf_token %}
-	    <p>Enter the amount you wish to buy "{{ key }}"?</p>
+	    <p>Enter the amount you wish to buy of "{{ key }}"</p>
 	    <input type="number" placeholder="Amount to buy" name="amount" />
 	    <input class="btn btn-outline-success" type="submit" value="Confirm"/>
 	</form>
