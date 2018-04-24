@@ -46,7 +46,7 @@ class StockScraper:
     def getMostRecentBusinessDay(self):
         today = datetime.datetime.today()
         weekdays = [0, 1, 2, 3, 4]
-        if(today.weekday() in weekdays):
+        if(today.weekday() in weekdays) and (today.hour > 9):
             return str(today).split()[0]
         shift = datetime.timedelta(max(1,(today.weekday() + 6) % 7 - 3))
         today = today - shift
